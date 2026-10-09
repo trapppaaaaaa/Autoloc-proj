@@ -1,9 +1,12 @@
-package com.esprit.autoloc.domain;
+package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "vehicule")
@@ -38,4 +41,22 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idAgence")
+    private Agence agence;
+
+    @OneToMany(mappedBy = "vehicule", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Maintenance> maintenances;
+
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "vehicule_equipement",
+            joinColumns = @JoinColumn(name = "idVehicule"),
+            inverseJoinColumns = @JoinColumn(name = "idEquipement")
+    )
+    private Set<Equipement> equipements = new HashSet<>();
 }

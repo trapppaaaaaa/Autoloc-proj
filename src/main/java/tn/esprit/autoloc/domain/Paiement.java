@@ -1,4 +1,4 @@
-package com.esprit.autoloc.domain;
+package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,4 +30,7 @@ public class Paiement {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ModePaiement modePaiement;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idContrat")
+    private Contrat contrat;
 }

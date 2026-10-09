@@ -1,4 +1,4 @@
-package com.esprit.autoloc.domain;
+package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,4 +27,9 @@ public class Maintenance {
 
     @Column(length = 255)
     private String description;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idVehicule")
+    private Vehicule vehicule;
 }

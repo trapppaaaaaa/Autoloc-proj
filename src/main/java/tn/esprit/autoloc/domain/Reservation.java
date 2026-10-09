@@ -1,4 +1,4 @@
-package com.esprit.autoloc.domain;
+package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,4 +29,15 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutReservation statut;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idClient")
+    private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idVehicule")
+    private Vehicule vehicule;
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Contrat contrat ;
 }
